@@ -1,0 +1,15 @@
+{
+  "disabledMcpjsonServers": [
+    "supabase",
+    "sequential-thinking",
+    "memory",
+    "actor-critic-thinking",
+    "chrome-devtools"
+  ],
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git remote add:*)"
+    ]
+  }
+}
