@@ -6,10 +6,12 @@ When deploying to Vercel, you need to set the following environment variables:
 
 ### Required Variables
 
+**IMPORTANT:** `VITE_API_URL` should be the BASE URL only (without `/api/v1/public`). The SDK automatically appends the API path.
+
 ```bash
 # Bug Reporter API Configuration
 VITE_API_KEY=br_NuIf5ghx-kA-C9EKsxul-wANVmC-z8jS
-VITE_API_URL=https://jkkn-centralized-bug-reporter.vercel.app/api/v1/public
+VITE_API_URL=https://jkkn-centralized-bug-reporter.vercel.app
 
 # User Context (Demo)
 VITE_USER_ID=demo-user-123
@@ -44,7 +46,7 @@ vercel env add VITE_API_KEY production
 # Enter: br_NuIf5ghx-kA-C9EKsxul-wANVmC-z8jS
 
 vercel env add VITE_API_URL production
-# Enter: https://jkkn-centralized-bug-reporter.vercel.app/api/v1/public
+# Enter: https://jkkn-centralized-bug-reporter.vercel.app
 
 vercel env add VITE_USER_ID production
 # Enter: demo-user-123
@@ -65,9 +67,11 @@ vercel --prod
 ## Important Notes
 
 ### API URL Structure
-- ✅ **Correct**: `https://jkkn-centralized-bug-reporter.vercel.app/api/v1/public`
-- ❌ **Incorrect**: `https://jkkn-centralized-bug-reporter.vercel.app` (missing `/api/v1/public`)
-- ❌ **Incorrect**: `http://localhost:3000` (local only)
+- ✅ **Correct**: `https://jkkn-centralized-bug-reporter.vercel.app` (BASE URL only)
+- ❌ **Incorrect**: `https://jkkn-centralized-bug-reporter.vercel.app/api/v1/public` (SDK appends this automatically - will cause duplicate path)
+- ❌ **Incorrect**: `http://localhost:3000` (local only, not for production)
+
+**Why?** The SDK automatically appends `/api/v1/public/bug-reports` to the base URL. If you include `/api/v1/public` in the URL, it will duplicate to `/api/v1/public/api/v1/public/bug-reports` causing a 405 error.
 
 ### API Key
 - Get your API key from the platform at: https://jkkn-centralized-bug-reporter.vercel.app
@@ -109,10 +113,12 @@ After deploying, verify:
 - Check that `VITE_API_KEY` is set correctly in Vercel
 - Verify the API key is active in the platform
 
-### Issue: CORS errors
-- Ensure `VITE_API_URL` includes `/api/v1/public` at the end
+### Issue: CORS errors or 405 errors
+- Ensure `VITE_API_URL` is the BASE URL only (no `/api/v1/public`)
+- Correct: `https://jkkn-centralized-bug-reporter.vercel.app`
+- Incorrect: `https://jkkn-centralized-bug-reporter.vercel.app/api/v1/public`
 - Wait for platform deployment to complete (CORS headers were just added)
-- Check browser network tab for actual request URL
+- Check browser network tab for actual request URL - should be `/api/v1/public/bug-reports` not `/api/v1/public/api/v1/public/bug-reports`
 
 ### Issue: Environment variables not working
 - After setting env vars in Vercel, you MUST redeploy
