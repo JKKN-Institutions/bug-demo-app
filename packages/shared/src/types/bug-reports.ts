@@ -4,8 +4,9 @@ export type BugReportStatus = 'open' | 'in_progress' | 'resolved' | 'closed';
 export type BugReportPriority = 'low' | 'medium' | 'high' | 'critical';
 
 export type BugReportCategory =
-  | 'ui'
-  | 'functionality'
+  | 'bug'
+  | 'feature_request'
+  | 'ui_design'
   | 'performance'
   | 'security'
   | 'other';

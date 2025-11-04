@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { captureScreenshot } from '../utils/screenshot';
 import { useBugReporter } from '../hooks/useBugReporter';
+import { consoleLogger } from '../utils/console-logger';
 import toast from 'react-hot-toast';
 
 // Simple inline styles (no Tailwind dependency for SDK)
@@ -101,6 +102,7 @@ export function BugReporterWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [category, setCategory] = useState<string>('bug');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCapturing, setIsCapturing] = useState(false);
   const [screenshot, setScreenshot] = useState<string>('');
@@ -141,17 +143,22 @@ export function BugReporterWidget() {
     setIsSubmitting(true);
 
     try {
+      // Get captured console logs
+      const capturedLogs = consoleLogger.getLogs();
+
       const payload: any = {
         title: title.trim(),
         page_url: window.location.href,
         description: description.trim(),
+        category: category,
         screenshot_data_url: screenshot,
-        console_logs: [],
+        console_logs: capturedLogs,
         metadata: {
           userAgent: navigator.userAgent,
           screenResolution: `${screen.width}x${screen.height}`,
           viewport: `${window.innerWidth}x${window.innerHeight}`,
           timestamp: new Date().toISOString(),
+          reporter_user_id: config.userContext?.userId,
         },
         // Include user context if provided
         reporter_email: config.userContext?.email,
@@ -163,6 +170,7 @@ export function BugReporterWidget() {
       toast.success('Bug report submitted successfully!');
       setTitle('');
       setDescription('');
+      setCategory('bug');
       setScreenshot('');
       setIsOpen(false);
     } catch (error) {
@@ -202,6 +210,7 @@ export function BugReporterWidget() {
                   setIsOpen(false);
                   setTitle('');
                   setDescription('');
+                  setCategory('bug');
                   setScreenshot('');
                 }}
                 style={styles.closeButton}
@@ -232,6 +241,33 @@ export function BugReporterWidget() {
               <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.25rem', margin: '0.25rem 0 0 0' }}>
                 Minimum 3 characters required ({title.length}/3)
               </p>
+            </div>
+
+            <div style={{ marginBottom: '1rem' }}>
+              <label style={styles.label}>
+                Category <span style={{ color: '#dc2626' }}>*</span>
+              </label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '0.375rem',
+                  fontSize: '0.875rem',
+                  fontFamily: 'inherit',
+                  backgroundColor: 'white',
+                  cursor: 'pointer',
+                }}
+              >
+                <option value="bug">Bug / Functionality Issue</option>
+                <option value="ui_design">UI/Design Issue</option>
+                <option value="performance">Performance Issue</option>
+                <option value="security">Security Issue</option>
+                <option value="feature_request">Feature Request</option>
+                <option value="other">Other</option>
+              </select>
             </div>
 
             <div style={{ marginBottom: '1rem' }}>

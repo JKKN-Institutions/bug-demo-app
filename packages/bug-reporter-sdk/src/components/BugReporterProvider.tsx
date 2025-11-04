@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { BugReporterApiClient } from '../api/client';
 import type { BugReporterConfig } from '../types/config';
 import { BugReporterWidget } from './BugReporterWidget';
+import { consoleLogger } from '../utils/console-logger';
 
 export interface BugReporterContextValue {
   apiClient: BugReporterApiClient | null;
@@ -50,6 +51,9 @@ export function BugReporterProvider({
       });
       setApiClient(client);
 
+      // Start capturing console logs
+      consoleLogger.startCapture();
+
       if (debug) {
         console.log('[BugReporter SDK] Initialized with config:', {
           apiUrl,
@@ -58,6 +62,13 @@ export function BugReporterProvider({
         });
       }
     }
+
+    // Cleanup: stop capturing on unmount
+    return () => {
+      if (enabled) {
+        consoleLogger.stopCapture();
+      }
+    };
   }, [apiKey, apiUrl, enabled, debug, userContext]);
 
   return (

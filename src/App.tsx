@@ -12,6 +12,14 @@ function App() {
     throw new Error('This is a test error!')
   }
 
+  const triggerConsoleLogs = () => {
+    console.log('This is a test log message')
+    console.info('This is an info message with useful information')
+    console.warn('This is a warning message - something might be wrong!')
+    console.error('This is an error message - something went wrong!')
+    console.debug('This is a debug message for developers')
+  }
+
   return (
     <>
       <div>
@@ -29,6 +37,9 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           Counter: {count}
         </button>
+        <button onClick={triggerConsoleLogs} style={{ marginLeft: '10px', background: '#4444ff' }}>
+          Test Console Logs
+        </button>
         <button onClick={triggerError} style={{ marginLeft: '10px', background: '#ff4444' }}>
           Trigger Error
         </button>
@@ -39,10 +50,11 @@ function App() {
         <div style={{ marginTop: '20px', textAlign: 'left', padding: '20px', background: '#f0f0f0', borderRadius: '8px' }}>
           <h3>How to Report a Bug:</h3>
           <ol>
+            <li>Click <strong>"Test Console Logs"</strong> to generate sample console messages</li>
             <li>Look for the floating 🐛 bug button in the bottom-right corner</li>
             <li>Click it to open the bug report form</li>
             <li>Fill in the bug title and description</li>
-            <li>The screenshot is automatically captured!</li>
+            <li>The screenshot and console logs are automatically captured!</li>
             <li>Submit the bug</li>
             <li>Check the platform dashboard at <code>http://localhost:3000</code></li>
           </ol>

@@ -6,6 +6,10 @@ export { MyBugsPanel } from './components/MyBugsPanel';
 // Hooks
 export { useBugReporter } from './hooks/useBugReporter';
 
+// Utils
+export { consoleLogger } from './utils/console-logger';
+export type { ConsoleLog } from './utils/console-logger';
+
 // Types
 export type { BugReporterConfig, ApiClientConfig } from './types/config';
 
