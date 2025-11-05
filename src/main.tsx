@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
-import { BugReporterProvider } from '@bug-reporter/bug-reporter-sdk/src';
+import { BugReporterProvider } from '@boobalan_jkkn/bug-reporter-sdk';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

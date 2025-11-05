@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Bug, Camera } from 'lucide-react';
 import { captureScreenshot } from '../utils/screenshot';
 import { useBugReporter } from '../hooks/useBugReporter';
 import { consoleLogger } from '../utils/console-logger';
@@ -196,7 +197,7 @@ export function BugReporterWidget() {
         className="bug-reporter-sdk bug-reporter-widget"
         title="Report a Bug"
       >
-        {isCapturing ? '📸' : '🐛'}
+        {isCapturing ? <Camera size={28} strokeWidth={2} /> : <Bug size={28} strokeWidth={2} />}
       </button>
 
       {/* Modal */}
@@ -204,7 +205,12 @@ export function BugReporterWidget() {
         <div style={styles.modal} className="bug-reporter-sdk" onClick={() => setIsOpen(false)}>
           <div style={styles.card} onClick={(e) => e.stopPropagation()}>
             <div style={styles.header}>
-              <h2 style={styles.title}>🐛 Report a Bug</h2>
+              <h2 style={styles.title}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Bug size={24} strokeWidth={2} />
+                  Report a Bug
+                </span>
+              </h2>
               <button
                 onClick={() => {
                   setIsOpen(false);

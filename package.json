@@ -10,10 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@boobalan_jkkn/bug-reporter-sdk": "^1.0.0",
+    "@boobalan_jkkn/bug-reporter-sdk": "^1.0.4",
     "@bug-reporter/bug-reporter-sdk": "file:./packages/bug-reporter-sdk",
     "@bug-reporter/shared": "file:./packages/shared",
     "html2canvas": "^1.4.1",
+    "lucide-react": "^0.552.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hot-toast": "^2.6.0"
