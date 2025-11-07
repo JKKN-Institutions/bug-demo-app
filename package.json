@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@boobalan_jkkn/bug-reporter-sdk": "^1.0.6",
+    "@boobalan_jkkn/bug-reporter-sdk": "^1.0.7",
     "@bug-reporter/bug-reporter-sdk": "file:./packages/bug-reporter-sdk",
     "@bug-reporter/shared": "file:./packages/shared",
     "html2canvas": "^1.4.1",
